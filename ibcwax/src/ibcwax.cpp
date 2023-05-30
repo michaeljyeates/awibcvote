@@ -32,7 +32,7 @@ ACTION ibcwax::init(const name& bridge_contract, const checksum256& paired_chain
     global_config.set(global, get_self());
 }
 
-ACTION ibcwax::prove( const name& prover, const bridge::lightproof blockproof, const bridge::actionproof actionproof ) {
+ACTION ibcwax::prove( const name& prover, const bridge::heavyproof blockproof, const bridge::actionproof actionproof ) {
     require_auth(prover);
 
     check(global_config.exists(), "contract must be initialized first");
@@ -48,12 +48,12 @@ ACTION ibcwax::prove( const name& prover, const bridge::lightproof blockproof, c
     check(global.paired_vote_contract == actionproof.action.account, "Action proof not from correct contract");
 
     // Save blockproof to singleton to be read by check action
-    auto p = _light_proof.get_or_create(get_self(), _light_proof_obj);
-    p.lp = blockproof;
-    _light_proof.set(p, get_self());
+    auto p = _heavy_proof.get_or_create(get_self(), _heavy_proof_obj);
+    p.hp = blockproof;
+    _heavy_proof.set(p, get_self());
 
     // Send inline action to verify proof (will assert entire tx if invalid)
-    ibcwax::lightproof_action checkproof_act(global.bridge_contract, permission_level{get_self(), "active"_n});
+    ibcwax::heavyproof_action checkproof_act(global.bridge_contract, permission_level{get_self(), "active"_n});
     checkproof_act.send(get_self(), actionproof);
 
     // Cast vote

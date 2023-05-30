@@ -6,16 +6,16 @@ using namespace std;
 CONTRACT ibcwax : public contract {
     private:
         // for bridge communication
-        TABLE lpstruct {
+        TABLE hpstruct {
             uint64_t id;
-            bridge::lightproof lp;
+            bridge::heavyproof hp;
             uint64_t primary_key()const { return id; }
-            EOSLIB_SERIALIZE( lpstruct, (id)(lp) )
-        } _light_proof_obj;
+            EOSLIB_SERIALIZE( hpstruct, (id)(hp) )
+        } _heavy_proof_obj;
 
-        using lptable = eosio::singleton<"lightproof"_n, lpstruct>;
+        using hptable = eosio::singleton<"heavyproof"_n, hpstruct>;
 
-        lptable _light_proof;
+        hptable _heavy_proof;
 
         TABLE processed {
             uint64_t                        id;
@@ -40,9 +40,9 @@ CONTRACT ibcwax : public contract {
         using contract::contract;
 
         void init(const name& bridge_contract, const checksum256& paired_chain_id, const name& paired_vote_contract, const name& dao_contract);
-        void prove( const name& prover, const bridge::lightproof blockproof, const bridge::actionproof actionproof );
+        void prove( const name& prover, const bridge::heavyproof blockproof, const bridge::actionproof actionproof );
 
-        using lightproof_action = action_wrapper<"checkproofc"_n, &bridge::checkproofc>;
+        using heavyproof_action = action_wrapper<"checkproofb"_n, &bridge::checkproofb>;
         using init_action = action_wrapper<"init"_n, &ibcwax::init>;
         using prove_action = action_wrapper<"prove"_n, &ibcwax::prove>;
 
@@ -62,6 +62,6 @@ CONTRACT ibcwax : public contract {
         contract(receiver, code, ds),
         global_config(_self, _self.value),
         _processedtable(_self, _self.value),
-        _light_proof(receiver, receiver.value)
+        _heavy_proof(receiver, receiver.value)
         { }
 };
