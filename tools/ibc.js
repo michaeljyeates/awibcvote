@@ -20,8 +20,23 @@ const chains = [{
     name: "jungle4",
     label: "Jungle4 (EOS) Testnet",
     proofSocket: "wss://jungle4-ibc.goldenplatform.com",
-    bridgeContract:"antelopeibc2",
-    version:3.1 //Can fetch from get_info
+    bridgeContract:"antelopeibc2"
+},{
+    chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+    nodeUrl: 'https://wax.eosusa.io',
+    name: "wax",
+    label: "WAX",
+    proofSocket: "wss://ibc-server.uxnetwork.io/wax",
+    bridgeContract: "ibc.prove",
+    proveContract: "e1.aioshi"
+},{
+    chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+    nodeUrl: 'https://api.eosnation.io', //api supporting send_transaction2
+    hyperion: 'https://eos.eosusa.io',
+    name: "eos",
+    label: "EOS",
+    proofSocket: "wss://ibc-server.uxnetwork.io/eos",
+    bridgeContract:"ibc.prove"
 }];
 
 // jungle : ibcvotetest1
