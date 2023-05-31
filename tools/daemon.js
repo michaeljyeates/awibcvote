@@ -33,8 +33,8 @@ const getLastVoteTx = async (chain_name) => {
     return tx_id;
 }
 
-const poll_time = 5 * 1000; // in ms
-// const poll_time = 60 * 60 * 1000; // in ms
+// const poll_time = 5 * 1000; // in ms
+const poll_time = 60 * 60 * 1000; // in ms
 let last_proven_tx = '';
 const run = async () => {
     let src = 'jungle4';
@@ -54,7 +54,7 @@ const run = async () => {
     }
 
     while (true){
-        console.log(`Checking for new transactions on source chain`);
+        // console.log(`Checking for new transactions on source chain`);
 
         const tx_id = await getLastVoteTx(src);
         if (tx_id && tx_id !== last_proven_tx){
