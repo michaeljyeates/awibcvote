@@ -14,7 +14,8 @@ const chains = [{
     name: "jungle4",
     label: "Jungle4 (EOS) Testnet",
     proofSocket: "wss://jungle4-ibc.goldenplatform.com",
-    bridgeContract:"antelopeibc2"
+    bridgeContract:"antelopeibc2",
+    voteContract: "ibcvotetest1"
 },{
     chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
     nodeUrl: 'https://wax.eosusa.io',
@@ -30,7 +31,8 @@ const chains = [{
     name: "eos",
     label: "EOS",
     proofSocket: "wss://ibc-server.uxnetwork.io/eos",
-    bridgeContract:"ibc.prove"
+    bridgeContract:"ibc.prove",
+    voteContract: "ibcvotetest1"
 }];
 
 
