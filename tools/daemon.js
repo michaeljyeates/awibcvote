@@ -34,7 +34,7 @@ const getLastVoteTx = async (chain_name) => {
 }
 
 // const poll_time = 5 * 1000; // in ms
-const poll_time = 60 * 60 * 1000; // in ms
+const poll_time = 60 * 1000; // in ms
 let last_proven_tx = '';
 const run = async () => {
     let src = 'jungle4';
