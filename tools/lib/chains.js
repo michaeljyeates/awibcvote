@@ -26,7 +26,7 @@ const chains = [{
     proveContract: "eden1.aioshi"
 },{
     chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-    nodeUrl: 'https://api.eosnation.io', //api supporting send_transaction2
+    nodeUrl: 'https://eos.api.eosnation.io', //api supporting send_transaction2
     hyperion: 'https://eos.eosusa.io',
     name: "eos",
     label: "EOS",
