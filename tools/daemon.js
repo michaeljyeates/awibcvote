@@ -17,20 +17,23 @@ const sleep = async (ms) => {
 const getLastVoteTx = async (chain_name) => {
     const chain_data = chainData(chain_name);
     let tx_id = null;
+    let block_num = null;
     try {
         const url = `${chain_data.hyperion}/v2/history/get_actions?filter=${chain_data.voteContract}:vote&limit=1`;
+        console.log(url);
         const res = await fetch(url);
         const json = await res.json();
         if (json && json.actions.length){
-            // console.log(json.actions[0]);
+            console.log(json.actions[0]);
             tx_id = json.actions[0].trx_id;
+            block_num = json.actions[0].block_num;
         }
     }
     catch (e){
         console.error(`Error fetching last vote action : ${e.message}`);
     }
 
-    return tx_id;
+    return { tx_id, block_num };
 }
 
 // const poll_time = 5 * 1000; // in ms
@@ -56,10 +59,10 @@ const run = async () => {
     while (true){
         // console.log(`Checking for new transactions on source chain`);
 
-        const tx_id = await getLastVoteTx(src);
+        const { tx_id, block_num } = await getLastVoteTx(src);
         if (tx_id && tx_id !== last_proven_tx){
             // wait for finality
-            while (!await transactionFinal(src, tx_id)){
+            while (!await transactionFinal(src, tx_id, block_num)){
                 await sleep(60000);
             }
 
