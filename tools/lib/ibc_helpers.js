@@ -52,8 +52,11 @@ const getProofRequestData = async (source_chain_name, destination_chain_name, tx
             const action_receipt = res.txs.filter(t => {
                 return t[0].transactionId === tx_id;
             });
-            const action = action_receipt[0][0].action;
-            action.receipt = action_receipt[0][0].receipt;
+            const action_data = action_receipt[0].find(a => {
+                return a.receiver === chain_data.voteContract;
+            });
+            const action = action_data.action;
+            action.receipt = action_data.receipt;
             resolve({type, action, ...block_data});
         });
     });
