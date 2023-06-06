@@ -12,7 +12,7 @@ const eosioObj = (chain_name) => {
     return api;
 }
 
-const transactionFinal = async (chain_name, tx_id) => {
+const transactionFinal = async (chain_name, tx_id, block_num = 0) => {
     console.log(`Checking tx status for ${tx_id}`);
     const chain_data = chainData(chain_name);
 
@@ -24,6 +24,14 @@ const transactionFinal = async (chain_name, tx_id) => {
         })
     });
     const json = await res.json();
+    // console.log(json);
+    if (json.state === 'UNKNOWN' && block_num){
+        console.log('Checking last irreversible block');
+        if (block_num < json.irreversible_number){
+            console.log('TX is earlier then last irreversible');
+            return true;
+        }
+    }
 
     return json.state === 'IRREVERSIBLE';
 }
