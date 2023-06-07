@@ -46,8 +46,8 @@ const getProofRequestData = async (source_chain_name, destination_chain_name, tx
             const res = JSON.parse(event.data);
             //log non-progress messages from ibc server
             if (res.type !=='progress') console.log("Received message from ibc getBlockActions", res);
-            if (res.type !=='getBlockActions') return;
             if (res.type === 'error') reject(res.error);
+            if (res.type !=='getBlockActions') return;
             ws.close();
             const action_receipt = res.txs.filter(t => {
                 return t[0].transactionId === tx_id;
