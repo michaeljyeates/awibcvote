@@ -107,8 +107,8 @@ const getProof = (chain_name, {type, block_to_prove, action, last_proven_block, 
             //log non-progress messages from ibc server
             if (res.type !=='progress') console.log("Received message from ibc proof server", res);
             // if (res.type =='progress') $('.progressDiv').last().html(res.progress +"%");
-            if (res.type !=='proof') return;
             if (res.type === 'error') reject(res.error);
+            if (res.type !=='proof') return;
             ws.close();
             resolve(res);
         });
