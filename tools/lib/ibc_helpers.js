@@ -55,9 +55,11 @@ const getProofRequestData = async (source_chain_name, destination_chain_name, tx
             const action_data = action_receipt[0].find(a => {
                 return a.receiver === chain_data.voteContract;
             });
+            // console.log('action data ', JSON.stringify(action_data, ' ', 2));
             const action = action_data.action;
             action.receipt = action_data.receipt;
-            resolve({type, action, ...block_data});
+            const action_receipt_digest = action_data.action_receipt_digest;
+            resolve({type, action, action_receipt_digest, ...block_data});
         });
     });
 }
@@ -92,10 +94,11 @@ const getProof = (chain_name, {type, block_to_prove, action, last_proven_block, 
             const query = { type, block_to_prove };
             if (type === 'lightProof'){
                 query.last_proven_block = last_proven_block;
-                query.action_receipt_digest = action_receipt_digest;
             }
-            if (action) query.action_receipt = action.receipt;
+            if (action_receipt_digest) query.action_receipt_digest = action_receipt_digest;
+            // if (action) query.action_receipt = action.receipt;
             ws.send(JSON.stringify(query));
+            // console.log(JSON.stringify(query, ' ', 4));
         });
 
         //messages from websocket server
